@@ -45,3 +45,30 @@
 ### 1. Запуск инфраструктуры
 ```bash
 docker-compose up -d
+
+### 2. Создание топиков
+docker exec broker kafka-topics --create --topic purchases --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+docker exec broker kafka-topics --create --topic products --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+docker exec broker kafka-topics --create --topic revenue-alerts --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+### 3. Запуск приложений
+# Терминал 1: Генератор данных
+mvn exec:java -Dexec.mainClass="com.example.DataGenerator"
+
+# Терминал 2: Kafka Streams приложение  
+mvn exec:java -Dexec.mainClass="com.example.RevenueAlertApp"
+
+# Терминал 3: Consumer алертов
+mvn exec:java -Dexec.mainClass="com.example.AlertConsumer"
+
+### 4. Структура проекта
+kafka-alert-app/
+├── src/main/java/com/example/
+│   ├── RevenueAlertApp.java      # Основное Kafka Streams приложение
+│   ├── DataGenerator.java        # Генератор тестовых данных
+│   ├── AlertConsumer.java        # Потребитель алертов
+│   ├── models/                   # Модели данных
+│   └── serde/                    # Сериализаторы/десериализаторы
+├── docker-compose.yml            # Docker конфигурация
+├── pom.xml                       # Maven конфигурация
+└── README.md                     # Документация
