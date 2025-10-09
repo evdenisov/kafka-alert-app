@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "RevenueAlertApp",
+            "request": "launch",
+            "mainClass": "com.example.RevenueAlertApp",
+            "projectName": "kafka-streams-alert"
+        },
+        {
+            "type": "java",
+            "name": "DataGenerator",
+            "request": "launch",
+            "mainClass": "com.example.DataGenerator",
+            "projectName": "kafka-streams-alert"
+        },
+        {
+            "type": "java",
+            "name": "AlertConsumer",
+            "request": "launch",
+            "mainClass": "com.example.AlertConsumer",
+            "projectName": "kafka-streams-alert"
+        }
+    ]
+}
