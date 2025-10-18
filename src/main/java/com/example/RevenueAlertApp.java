@@ -163,7 +163,7 @@ public class RevenueAlertApp {
                     totalRevenue,
                     String.format("Alert: Product %d exceeded revenue threshold. Total: %.2f", 
                                  productId, totalRevenue),
-                    System.currentTimeMillis()
+                    Instant.now()
                 );
                 System.out.println("🎯 CREATING ALERT: " + alert.getMessage());
                 return KeyValue.pair(productId, alert);
