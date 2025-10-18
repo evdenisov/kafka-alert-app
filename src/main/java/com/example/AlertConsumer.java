@@ -20,20 +20,18 @@ public class AlertConsumer {
         props.put(ConsumerConfig.GROUP_ID_CONFIG, "alert-consumer");
         props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class.getName());
-        props.put(JsonDeserializer.CONFIG_VALUE_CLASS, Alert.class.getName());
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 
-        KafkaConsumer<String, Alert> consumer = new KafkaConsumer<>(props);
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
         consumer.subscribe(Collections.singletonList("revenue-alerts"));
 
         System.out.println("Listening for revenue alerts...");
         
         while (true) {
-            ConsumerRecords<String, Alert> records = consumer.poll(Duration.ofMillis(100));
-            for (ConsumerRecord<String, Alert> record : records) {
-                Alert alert = record.value();
-                System.out.println("🚨 ALERT RECEIVED: " + alert);
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+            for (ConsumerRecord<String, String> record : records) {
+                System.out.println("🚨 ALERT RECEIVED: " + record.value());
             }
         }
     }

@@ -3,38 +3,43 @@ package com.example.models;
 import java.time.Instant;
 
 public class Alert {
-    private long productId;
-    private double totalRevenue;
+    private Long productId;
+    private Double revenue;
     private String message;
     private Instant timestamp;
 
+    // Конструкторы
     public Alert() {}
 
-    public Alert(long productId, double totalRevenue, String message, Instant timestamp) {
+    // Конструктор с Instant
+    public Alert(Long productId, Double revenue, String message, Instant timestamp) {
         this.productId = productId;
-        this.totalRevenue = totalRevenue;
+        this.revenue = revenue;
         this.message = message;
         this.timestamp = timestamp;
     }
 
-    // Getters and Setters
-    public long getProductId() { return productId; }
-    public void setProductId(long productId) { this.productId = productId; }
+    // Новый конструктор с long (миллисекунды)
+    public Alert(Long productId, Double revenue, String message, long timestampMillis) {
+        this.productId = productId;
+        this.revenue = revenue;
+        this.message = message;
+        this.timestamp = Instant.ofEpochMilli(timestampMillis);
+    }
 
-    public double getTotalRevenue() { return totalRevenue; }
-    public void setTotalRevenue(double totalRevenue) { this.totalRevenue = totalRevenue; }
-
+    // Геттеры и сеттеры
+    public Long getProductId() { return productId; }
+    public void setProductId(Long productId) { this.productId = productId; }
+    public Double getRevenue() { return revenue; }
+    public void setRevenue(Double revenue) { this.revenue = revenue; }
     public String getMessage() { return message; }
     public void setMessage(String message) { this.message = message; }
-
     public Instant getTimestamp() { return timestamp; }
     public void setTimestamp(Instant timestamp) { this.timestamp = timestamp; }
 
     @Override
     public String toString() {
-        return "Alert{productId=" + productId + 
-               ", totalRevenue=" + String.format("%.2f", totalRevenue) + 
-               ", message='" + message + "'" +
-               ", timestamp=" + timestamp + "}";
+        return "Alert{productId=" + productId + ", revenue=" + revenue + 
+               ", message='" + message + "', timestamp=" + timestamp + "}";
     }
 }
